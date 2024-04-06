@@ -7,10 +7,10 @@ import { Schema, Prop, SchemaFactory } from "@nestjs/mongoose";
 
 export class Product {
 
-    @Prop({ trim: true })
+    @Prop({ trim: true, unique: true, required: true })
     id: string;
     
-    @Prop({ trim: true })
+    @Prop({ trim: true, unique: true })
     title: string;
 
     @Prop({ trim: true })

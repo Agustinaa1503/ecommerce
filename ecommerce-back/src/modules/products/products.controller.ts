@@ -1,13 +1,4 @@
-import { Controller, 
-    Get, 
-    Post, 
-    Delete, 
-    Put, 
-    Body, 
-    Param,
-    NotFoundException,
-    HttpCode,
-    ConflictException} from '@nestjs/common';
+import { Controller, Get, Post, Delete, Put, Body, Param, NotFoundException, HttpCode, HttpStatus, HttpException } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from 'src/dto/create-product.dto';
 import { Product } from 'src/schema/products.schema';
@@ -32,20 +23,26 @@ export class ProductsController {
         
     }
 
-
     @Post()
     async create(@Body() body: CreateProductDto) {
         try {
-            return await this.productsService.create(body);
-          } catch (error) {
+            // Intenta crear el producto
+            const newProduct = await this.productsService.create(body);
+            
+            // Si se crea correctamente, devuelve el producto creado
+            return newProduct;
+        } catch (error) {
+            // Si hay un error, verifica si es un error de conflicto (producto existente)
             if (error.code === 11000) {
-              throw new ConflictException('Producto existente');
+                // Lanza una excepción de conflicto con un mensaje personalizado
+                throw new HttpException('El producto ya existe', HttpStatus.CONFLICT);
+            } else {
+                // Si no es un error de conflicto, lanza el error original
+                throw error;
             }
-            throw error;
-          }
+        }
     }
-
-
+    
 
     @Delete(':id')
     @HttpCode(204)
@@ -54,7 +51,7 @@ export class ProductsController {
         if (!product) {
             throw new NotFoundException('Producto no encontrado para ser eliminado');
         }
-        return product;
+        return HttpStatus.NO_CONTENT; 
     }
 
     @Put(':id')
