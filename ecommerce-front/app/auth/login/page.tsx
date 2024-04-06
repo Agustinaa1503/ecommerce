@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/interfaces/login.interface";
-import { Title } from '@/components';
-import Container from '@/components/shared/container';
-import { Input, Link } from '@nextui-org/react';
-import ButtonPrimary from '@/components/ui/button-primary';
+import { Title } from "@/components";
+import Container from "@/components/shared/container";
+import { Input, Link } from "@nextui-org/react";
+import ButtonPrimary from "@/components/ui/button-primary";
 
 type Login = {
   email: string;
   password: string;
   confirmPassword: string;
-}
+};
 
 export default function LoginPage() {
   const [isInvalid, setIsInvalid] = useState(false);
@@ -21,9 +21,9 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm<Login>({
-    resolver: zodResolver(LoginSchema)
+    resolver: zodResolver(LoginSchema),
   });
 
   const onSubmit: SubmitHandler<Login> = (data) => {
@@ -41,6 +41,16 @@ export default function LoginPage() {
     <div>
       <Container>
         <div className="flex flex-col justify-center items-center pt-10">
+          <div className="flex justify-end w-full mb-4">
+            <Link href="/">
+              <ButtonPrimary
+                type="button"
+                text="Página principal"
+                className="border-2 border-primary bg-transparent hover:bg-transparent w-full"
+              />
+            </Link>
+          </div>
+
           <Title title="INICIO" titlePrimary="SESIÓN" />
           <div className="container">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -54,7 +64,7 @@ export default function LoginPage() {
                   label="Email"
                   defaultValue=""
                   className="max-w-sm mb-4"
-                  {...register('email')}
+                  {...register("email")}
                   onChange={handleInputChange}
                 />
                 {errors.email && (
@@ -70,11 +80,13 @@ export default function LoginPage() {
                   label="Contraseña"
                   defaultValue=""
                   className="max-w-sm mb-4"
-                  {...register('password')}
+                  {...register("password")}
                   onChange={handleInputChange}
                 />
                 {errors.password && (
-                  <span className="text-red-500">{errors.password.message}</span>
+                  <span className="text-red-500">
+                    {errors.password.message}
+                  </span>
                 )}
 
                 <div className="flex flex-col mb-2 mt-3">

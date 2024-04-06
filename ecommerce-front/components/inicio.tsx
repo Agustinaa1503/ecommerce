@@ -24,21 +24,22 @@ const Inicio = () => {
                         </h1>
                         <p className="text-gray-400">
                         Prepara la diversión, nosotros ponemos el resto. <br /> ¡Tu fiesta
-                        será inolvidable con nuestros productos!
+                        será inolvidable! ¿Quieres conocer más?
                         </p>
                         <div className="flex flex-col sm:flex-row items-center gap-5">
+
+                            <Link href="/shop">
+                                <ButtonPrimary 
+                                    type="button" 
+                                    text="Conocé Nuestro Mundo"
+                                    className='border-2 border-primary bg-transparent hover:bg-transparent w-full'/>
+                            </Link>
+
                             <Link href="/shop">
                                 <ButtonPrimary 
                                     className='hover:bg-transparent w-full' 
                                     type="button" 
                                     text="Comprar ahora" />
-                            </Link>
-
-                            <Link href="/shop">
-                                <ButtonPrimary 
-                                    type="button" 
-                                    text="Nuestro Mundo"
-                                    className='border-2 border-primary bg-transparent hover:bg-transparent w-full'/>
                             </Link>
                         </div>
                     </div>

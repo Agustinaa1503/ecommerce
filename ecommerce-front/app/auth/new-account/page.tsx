@@ -49,6 +49,16 @@ export default function NewAccountPage() {
     <div>
       <Container>
         <div className="flex flex-col justify-center items-center pt-10">
+          <div className="flex justify-end w-full mb-4">
+          <Link href="/">
+            <ButtonPrimary
+              type="button"
+              text="Página principal"
+              className="border-2 border-primary bg-transparent hover:bg-transparent w-full"
+            />
+          </Link>
+          </div>
+          
           <Title title="CREAR" titlePrimary="CUENTA" />
           <div className="container">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -76,7 +86,9 @@ export default function NewAccountPage() {
                   // onChange={handleInputChange}
                 />
                 {errors.lastName && (
-                  <span className="text-red-500">{errors.lastName.message}</span>
+                  <span className="text-red-500">
+                    {errors.lastName.message}
+                  </span>
                 )}
 
                 <Input
@@ -115,7 +127,9 @@ export default function NewAccountPage() {
                   // onChange={handleInputChange}
                 />
                 {errors.password && (
-                  <span className="text-red-500">{errors.password.message}</span>
+                  <span className="text-red-500">
+                    {errors.password.message}
+                  </span>
                 )}
 
                 <Input
@@ -128,12 +142,14 @@ export default function NewAccountPage() {
                   // onChange={handleInputChange}
                 />
                 {errors.confirmPassword && (
-                  <span className="text-red-500">{errors.confirmPassword.message} </span>
+                  <span className="text-red-500">
+                    {errors.confirmPassword.message}{" "}
+                  </span>
                 )}
 
                 <div className="flex flex-col mb-2 mt-3">
                   <Link href="/auth/login" className="mb-3">
-                    ¿Ya tienes una cuenta?
+                    ¿Ya tienes una cuenta? Volver a iniciar sesión
                   </Link>
                   <ButtonPrimary
                     className="hover:bg-transparent flex w-auto justify-center"

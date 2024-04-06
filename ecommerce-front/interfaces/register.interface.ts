@@ -3,7 +3,7 @@ import {z} from "zod"
 // Register
 
 export const RegisterSchema = z.object({
-    name: z
+    firstName: z
     .string().min(3, { message: "El nombre debe tener al menos 3 caracteres" }).max(20),
     lastName: z
     .string().min(3, { message: "El apellido debe tener al menos 3 caracteres" }).max(20),

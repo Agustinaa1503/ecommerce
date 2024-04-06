@@ -15,21 +15,24 @@ export const createProductRequest = async (product: CreateProduct) => {
     });
 
     if (!response.ok) {
-      const responseData = await response.json();
-      if (responseData && responseData.message === 'Producto existente') {
-        throw new Error('El producto ya existe');
-      }
       throw new Error('Error al crear el producto');
     }
 
+    const responseData = await response.json();
+    if (responseData && responseData.message === 'Producto existente') {
+      throw new Error('El producto ya existe');
+    }
+
     toast.success('Producto creado exitosamente');
-    return response.json();
+    return responseData;
   } catch (error: any) {
     console.error('Error al crear el producto:', error.message);
     toast.error(error.message || 'Error al crear el producto');
     throw error;
   }
 };
+
+
 
 export const getProductsRequest = async () => fetch(`${API}/products`);
 

@@ -7,6 +7,7 @@ import { createProductRequest } from "@/api/products";
 import { ProductSchema, optionsCategory } from "@/interfaces/product.interface";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
 
 type Gender = keyof typeof optionsCategory;
 type Product = {
@@ -38,18 +39,18 @@ export const ProductForm = () => {
 
   const onSubmit: SubmitHandler<Product> = async (data) => {
     try {
-      console.log("DATOS DEL FORMULARIO", data);
       const res = await createProductRequest(data);
-      if (!res) {
-        throw new Error('La respuesta del servidor es nula o indefinida');
-      }
-      const responseData = await res.json();
-      console.log("RESPUESTA DEL SERVIDOR", responseData);
-    } catch (error) {
+      console.log("RESPUESTA DEL SERVIDOR", res);
+    } catch (error: any) {
       console.log("Error al crear un Producto", error);
-      throw error;
+      if (error.message === 'El producto ya existe') {
+        toast.error('El producto ya existe');
+      } else {
+        toast.error('Error al crear el producto');
+      }
     }
   };
+
 
 
   return (

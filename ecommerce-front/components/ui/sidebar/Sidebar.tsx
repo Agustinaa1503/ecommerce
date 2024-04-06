@@ -65,11 +65,11 @@ export const Sidebar = () => {
             href="/"
             className="flex items-center mt-3 p-2 hover:bg-gray-100 rounded transition-all">
                 <IoTicketOutline size={20} className="text-black"/>
-                <span className="ml-3 text-lg text-gray-500">Ordenes</span>
+                <span className="ml-3 text-lg text-gray-500">Compras</span>
         </Link>
 
         <Link
-            href="/"
+            href="/auth/login"
             className="flex items-center mt-3 p-2 hover:bg-gray-100 rounded transition-all">
                 <IoLogIn size={20} className="text-black"/>
                 <span className="ml-3 text-lg text-gray-500">Ingresar</span>
@@ -82,27 +82,30 @@ export const Sidebar = () => {
                 <span className="ml-3 text-lg text-gray-500">Cerrar Sesión</span>
         </Link>
 
+
+        {/* ADMINISTRADOR - SOLO DEBE APARECER CUANDO SEA ADMINISTRADOR */}
+
         {/* Separator */}
         <div className="w-full h-px bg-blue-100 my-4">
         <Link
-            href="/"
+            href="/shop"
             className="flex items-center mt-8 p-2 hover:bg-gray-100 rounded transition-all">
                 <IoShirtOutline size={20} className="text-black"/>
                 <span className="ml-3 text-lg text-gray-500">Productos</span>
         </Link>
 
         <Link
-            href="/"
+            href="/shop/admin"
             className="flex items-center mt-3 p-2 hover:bg-gray-100 rounded transition-all">
                 <IoTicketOutline size={20} className="text-black"/>
-                <span className="ml-3 text-lg text-gray-500">Ordenes</span>
+                <span className="ml-3 text-lg text-gray-500">Panel Administrador</span>
         </Link>
 
         <Link
             href="/"
             className="flex items-center mt-3 p-2 hover:bg-gray-100 rounded transition-all">
                 <IoPeopleOutline size={20} className="text-black"/>
-                <span className="ml-3 text-lg text-gray-500">Usuarios</span>
+                <span className="ml-3 text-lg text-gray-500">Usuarios registrados</span>
         </Link>
 
         </div>
