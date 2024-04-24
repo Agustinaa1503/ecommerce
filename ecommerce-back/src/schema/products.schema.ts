@@ -10,7 +10,7 @@ export class Product {
     @Prop({ trim: true, unique: true, required: true })
     id: string;
     
-    @Prop({ trim: true, unique: true })
+    @Prop({ trim: true, unique: true, required: true })
     title: string;
 
     @Prop({ trim: true })
@@ -22,8 +22,9 @@ export class Product {
     @Prop ({trim: true})
     inStock: string;
 
-    @Prop ({ trim: true })
-    images: string;
+    @Prop([String])
+    images: string[];
+
 
     @Prop({ trim: true })
     gender: string;

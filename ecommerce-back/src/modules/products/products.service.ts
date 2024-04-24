@@ -13,8 +13,18 @@ export class ProductsService {
         return this.productModel.find().exec();
     }
 
-    async create(createProduct: CreateProductDto): Promise<Product> {
-        const createdProduct = new this.productModel(createProduct);
+    async create(createProductDto: CreateProductDto, images: string[]): Promise<Product> {
+        // Procesa las imágenes como desees, por ejemplo, guardándolas en una carpeta en el sistema de archivos o en una base de datos
+        // Aquí asumimos que las imágenes se guardan como nombres de archivo en un array
+        const imageNames = images.map(image => image);
+
+        // Crea un nuevo producto utilizando el DTO y las imágenes procesadas
+        const createdProduct = new this.productModel({
+            ...createProductDto,
+            images: imageNames
+        });
+
+        // Guarda el producto en la base de datos
         return createdProduct.save();
     }
 
