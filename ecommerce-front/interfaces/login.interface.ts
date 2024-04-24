@@ -9,13 +9,10 @@ export const LoginSchema = z.object({
     password: z
     .string()
     .min(6, { message: "La contraseña debe tener al menos 6 caracteres" }),
-    confirmPassword: z
-    .string()
-    .min(6, { message: "Se recomienda que la contraseña tenga al menos 6 caracteres"}),
-})
-.refine((data)=> data.password === data.confirmPassword, {
-    message: "Password no coinciden",
-    path:["confirmPassword"],
 })
 
-export type RegisterInput = z.infer<typeof LoginSchema>
+export type LoginInput = z.infer<typeof LoginSchema>
+
+export type CreateLogin = Omit<LoginInput, "_id" | "createdAt" | "updatedAt">
+
+export type UpdateLogin = Partial<CreateLogin>;

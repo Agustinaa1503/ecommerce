@@ -1,17 +1,14 @@
-import { CreateProduct, UpdateProduct }   from '../interfaces/product.interface';
+import { CreateProduct, UpdateProduct }   from '../../interfaces/product.interface';
 import { toast } from 'react-toastify';
 
 
 const API = 'http://localhost:8080/api'
 
-export const createProductRequest = async (product: CreateProduct) => {
+export const createProductRequest = async (productFormData: FormData) => {
   try {
     const response = await fetch(`${API}/products`, {
       method: 'POST',
-      body: JSON.stringify(product),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      body: productFormData, // Envía el FormData directamente como cuerpo
     });
 
     if (!response.ok) {
@@ -51,8 +48,7 @@ export const updateProductRequest = async (id: string, product: UpdateProduct) =
     });
 
     if (!response.ok) {
-      const responseData = await response.json();
-      throw new Error(responseData.message || 'Error al modificar el producto');
+      throw new Error(response.statusText || 'Error al modificar el producto');
     }
 
     toast.success('Producto modificado exitosamente');

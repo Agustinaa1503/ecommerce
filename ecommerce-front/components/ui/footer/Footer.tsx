@@ -8,7 +8,7 @@ export const Footer = () => {
       <div className="flex flex-col items-center justify-center text-xs mb-10 mt-40">
         <div className="flex justify-center items-center border-b-2 border-neutral-200 p-6 dark:border-color10 lg:justify-between w-full">
           <div className="mr-12 hidden md:block">
-            <span>Redes Sociales:</span>
+            <span>Conócenos sobre nosotros</span>
           </div>
           <div className="flex justify-center items-center">
           <div className="flex justify-center items-center">
@@ -95,9 +95,9 @@ export const Footer = () => {
           </div>
         </div>
         <div className="mx-6 pt-8 pb-4 text-center">
-          <Link href="/">
+          <Link href="https://www.instagram.com/digitalwhiz1/" target="_blank">
             <span className={`${titleFont.className} antialiased font-bold`}>
-              Cotillón Libertad.{" "}
+              Digitalwhiz.{" "}
             </span>
             <span>
               Copyright © {new Date().getFullYear()}. Todos los derechos

@@ -18,13 +18,15 @@ export const ProductGridItem = ({ product }: Props) => {
     <div className='rounded-md overflow-hidden fade-in'>
         <Link href={`/shop/product/${product._id}`}>
             <Image
-                src={`/products/${product.images}`}
+                src={displayImage?.includes('image1') ? '/products/9877040-00-A_1.jpg' : '/products/9877040-00-A_0_2000.jpg'}
+                 // src={`/products/9877040-00-A_1.jpg`}
+                // src={`/products/${product.images}`}
                 alt={product.title}
                 className='w-ful object-cover rounded' 
                 width={500} 
                 height={500}
-                // onMouseEnter={() => setDisplayImage(product.images)}
-                // onMouseLeave={() => setDisplayImage(product.images)}
+                onMouseEnter={() => setDisplayImage(product.images)}
+                onMouseLeave={() => setDisplayImage(product.images)}
                 />
         </Link>
         <div className='p-4 flex flex-col'>

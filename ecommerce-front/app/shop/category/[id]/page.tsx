@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ProductGrid, Title } from "@/components";
-import { Category } from '@/interfaces/category.enum';
+import { Category, optionsCategory } from '@/interfaces/product.interface';
 import Container from "@/components/shared/container";
 
 interface Props {
@@ -16,18 +16,6 @@ export default function CategoryPage({ params }: Props) {
 
   const [selectedCategory, setSelectedCategory] = useState<Category>(id);
 
-
-  const gender: Record<Category, string> = {
-    'fiestas': 'Fiestas',
-    'fluor': 'Fluor',
-    'luminoso': 'Luminoso',
-    'infantiles': 'Infantiles',
-    'reposteria': 'Repostería',
-    'decoracion': 'Decoración',
-    'globos': 'Globos',
-    'otros': 'Otros',
-  }
-
   const handleCategoryGender = (category: Category) => {
     setSelectedCategory(category);
   }
@@ -35,7 +23,7 @@ export default function CategoryPage({ params }: Props) {
   return (
     <>
       <Container>
-        <Title title='Elegí' titlePrimary={`${(gender as any)[id]}`} />
+      <Title title='Elegí' titlePrimary={optionsCategory[id]} />
 
         <ProductGrid />
 

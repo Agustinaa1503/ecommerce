@@ -49,10 +49,8 @@ export const ProductSchema = z.object({
       errorMap: () => ({ message: "Debe seleccionar una categoría" }),
   }).optional(),
 
-  images: z.string().optional(),
+  images: z.array(z.string()).optional(),
 
-  // images: z.array(z.string()).max(5, { message: "Máximo 5 imágenes permitidas" }).optional(),
-  // images: z.array(z.string()).optional(),
   slug: z.string().optional(),
 
   createdAt: z.string().optional(),

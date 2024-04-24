@@ -2,7 +2,7 @@
 
 import {useState, useEffect} from 'react';
 import {ProductGridItem} from './ProductGridItem';
-import {getProductsRequest} from '@/api/products';
+import {getProductsRequest} from '@/app/api/products';
 import {Product} from '@/interfaces';
 
 export const ProductGrid = () => {
