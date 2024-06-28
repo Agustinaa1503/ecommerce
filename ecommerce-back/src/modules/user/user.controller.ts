@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, Param, Put, Delete, HttpCode, HttpStatus, HttpException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, HttpCode, HttpStatus, HttpException, Req } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { CreateUserDto } from '../../dto/create-user.dto';
 import { User } from 'src/schema/user.schema';
 import { UpdateUserDto } from 'src/dto/update-user.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
+// import { LoginUserDto } from 'src/dto/login-user.dto';
+
 
 @Controller('user')
 @ApiTags('User')
@@ -11,7 +13,7 @@ export class UserController {
   
   constructor(private readonly userService: UserService) {}
 
-  @Post()
+  @Post('')
   @ApiBody({ type: CreateUserDto })
   async create(@Body() createUserDto: CreateUserDto) {
     try {
@@ -33,6 +35,23 @@ export class UserController {
     }
   }
 
+  @Post('')
+  @ApiBody({ type: CreateUserDto })
+  async login(@Body() createUserDto: CreateUserDto) {
+    const {email, password} = createUserDto;
+    return await this.userService.loginUser(email, password);
+  }
+
+  @Post('')
+  refreshToken(@Req() request: Request)
+  {
+    const [token] = request.headers['authorization'].split(' ') || [];
+    return this.userService.refreshToken(token);
+  }
+
+
+
+
   @Get()
   async findAll(): Promise<User[]> {
     return await this.userService.findAll();
@@ -47,19 +66,19 @@ export class UserController {
     return user;
   }
 
-  @Put(':id')
-  async update(@Param('id') _id: string, @Body() updateUser: UpdateUserDto) {
-    const user = await this.userService.update(_id, updateUser);
+  @Put('email')
+  async update(@Param('email') email: string, @Body() updateUser: UpdateUserDto) {
+    const user = await this.userService.update(email, updateUser);
     if (!user) {
       throw new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
     }
     return user;
   }
 
-  @Delete(':id')
+  @Delete(':email')
   @HttpCode(204)
-  async delete(@Param('id') _id: string) {
-    const user = await this.userService.delete(_id);
+  async delete(@Param('email') email: string) {
+    const user = await this.userService.delete(email);
     if (!user) {
       throw new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
     }
