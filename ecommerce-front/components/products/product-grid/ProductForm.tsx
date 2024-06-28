@@ -1,6 +1,6 @@
 "use client";
 
-import ButtonPrimary from "@/components/ui/button-primary";
+import ButtonPrimary from "@/components/ui/buttons/button-primary";
 import { Title } from "../../ui/title/title";
 import { Input, Textarea } from "@nextui-org/react";
 import { createProductRequest } from "@/app/api/products";

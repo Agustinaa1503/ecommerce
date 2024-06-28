@@ -6,7 +6,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/interfaces/login.interface";
 import { Input, Link } from "@nextui-org/react";
-import ButtonPrimary from "@/components/ui/button-primary";
+import ButtonPrimary from "@/components/ui/buttons/button-primary";
 // import { signIn } from "next-auth/react"; INICIO DE SESIÓN CON GOOGLE
 import { Title } from "@/components";
 
@@ -15,7 +15,7 @@ type Login = {
   password: string;
 };
 
-export default function Login() {
+export default function LoginForm() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
@@ -133,7 +133,7 @@ export default function Login() {
           </div>
 
           <div className="flex flex-col mb-2 mt-3 justify-center items-center">
-            <Link href="/auth/new-account">
+            <Link href="/api/auth/register">
               <ButtonPrimary
                 className="hover:bg-transparent flex w-auto justify-center"
                 type="button"

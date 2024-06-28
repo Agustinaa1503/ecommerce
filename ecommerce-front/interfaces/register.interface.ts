@@ -23,21 +23,21 @@ export const RegisterSchema = z.object({
         errorMap: () => ({ message: "Debe seleccionar un rol según su oficina" }),
     }).optional(),
 
-    firstName: z
-    .string().min(3, { message: "El nombre debe tener al menos 3 caracteres" }).max(20),
-    lastName: z
-    .string().min(3, { message: "El apellido debe tener al menos 3 caracteres" }).max(20),
+    name: z
+    .string().min(3, { message: "El nombre debe tener al menos 3 caracteres" }).max(20).optional(),
+    image: z.string().optional(),
+    provider: z.enum(["google"]).optional(),
     phone: z
-    .string().min(8, { message: "El telefono debe tener al menos 8 caracteres" }).max(20),
+    .string().min(8, { message: "El telefono debe tener al menos 8 caracteres" }).max(20).optional(),
     email:z
     .string()
-    .email({ message: "Ingrese un correo electrónico válido" }),
+    .email({ message: "Ingrese un correo electrónico válido" }).optional(),
     password: z
     .string()
-    .min(6, { message: "La contraseña debe tener al menos 6 caracteres" }),
+    .min(6, { message: "La contraseña debe tener al menos 6 caracteres" }).optional(),
     confirmPassword: z
     .string()
-    .min(6, { message: "Se recomienda que la contraseña tenga al menos 6 caracteres"}),
+    .min(6, { message: "Se recomienda que la contraseña tenga al menos 6 caracteres"}).optional(),
 })
 .refine((data)=> data.password === data.confirmPassword, {
     message: "Password no coinciden",

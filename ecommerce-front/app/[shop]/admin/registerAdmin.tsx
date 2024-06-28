@@ -4,7 +4,7 @@ import Container from "@/components/shared/container";
 import React, { useEffect, useState } from "react";
 import { Input } from "@nextui-org/react";
 import { Title } from "@/components";
-import ButtonPrimary from "@/components/ui/button-primary";
+import ButtonPrimary from "@/components/ui/buttons/button-primary";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -14,8 +14,8 @@ import { createAdminRequest } from "@/app/api/admin";
 
 type Agent = keyof typeof agentOptions;
 type RegisterAdmin = {
-  firstName: string;
-  lastName: string;
+  name: string;
+  // lastName: string;
   phone: string;
   email: string;
   password: string;
@@ -62,15 +62,15 @@ export default function NewAdminAgentPage() {
                   defaultValue=""
                   isInvalid={isInvalid}
                   className="max-w-sm mb-4"
-                  {...register("firstName")}
+                  {...register("name")}
                   // onChange={handleInputChange}
                 />
-                {errors.firstName && (
+                {errors.name && (
                   <span className="text-red-500">
-                    {errors.firstName.message}
+                    {errors.name.message}
                   </span>
                 )}
-
+{/* 
                 <Input
                   isRequired
                   type="text"
@@ -85,7 +85,7 @@ export default function NewAdminAgentPage() {
                   <span className="text-red-500">
                     {errors.lastName.message}
                   </span>
-                )}
+                )} */}
 
                 <Input
                   isRequired

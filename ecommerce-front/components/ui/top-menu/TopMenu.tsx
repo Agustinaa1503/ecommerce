@@ -1,23 +1,27 @@
 'use client'
 
-import { titleFont } from "@/config/fonts"
 import { useUIStore } from "@/store"
 import Link from "next/link"
-import { IoCartOutline, IoSearchOutline } from "react-icons/io5"
+import { IoCartOutline } from "react-icons/io5"
+import Image from "next/image";
+import { signIn, signOut, useSession } from "next-auth/react";
+import Logo from "@/components/shared/logo"
+import { APP_ROUTES } from "@/routes/routes";
 
 export const TopMenu = () => {
 
     const openSidebar = useUIStore((state) => state.openSidebar)
+    const { data: session } = useSession();
+    // console.log("Inicio de Sesión", session);
+
+    if (session === undefined) {
+      return null;
+    }
 
     return (
         <nav className="flex px-5 justify-between items-center w-full">
             <div className="">
-                {/* Logo */}
-                <Link 
-                    href="/">
-                        <span className={`${titleFont.className} antialiased font-semibold`}>Cotillón</span>
-                        <span> | Libertad</span>
-                </Link>
+                <Logo />
             </div>
 
             {/* Center Menu */}
@@ -54,6 +58,34 @@ export const TopMenu = () => {
                 className="m-2 p-2 rounded-md transition-all hover:bg-gray-100">
                     Menú
                 </button>
+
+                {session?.user ? (
+          <div>
+            <p>Hola {session?.user?.name} !!</p>
+            <Image
+              src={session?.user?.image}
+              alt="Imagen de perfil"
+              width={32}
+              height={32}
+              className="rounded-full"
+            />
+            <button
+              onClick={async () =>
+                await signOut({
+                  callbackUrl: APP_ROUTES.HOME,
+                })
+              }
+            >
+              Cerrar sesión
+            </button>
+          </div>
+        ) : (
+          <button
+            className="py-2 px-4 bg-primary text-white rounded-lg border-2 border-transparent hover:bg-transparent hover:border-primary hover:text-primary transition-colors duration-300"
+            onClick={() => signIn()}>Iniciar sesión
+          </button>
+        )}
+
             </div>
         </nav>
     )

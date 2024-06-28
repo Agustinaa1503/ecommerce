@@ -1,10 +1,10 @@
-import NewAccountPage from "./NewAccount";
+import RegisterForm from "./RegisterForm";
 
 export default function NewAccount() {
 
   return (
     <div>
-      <NewAccountPage />
+      <RegisterForm />
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { QuantitySelector, Title } from "@/components";
 import { initialData } from "@/seed/seed";
 import Image from "next/image";
 import Container from "@/components/shared/container";
-import ButtonPrimary from "@/components/ui/button-primary";
+import ButtonPrimary from "@/components/ui/buttons/button-primary";
 import { redirect } from "next/navigation";
 
 const productsInCart = [

@@ -1,4 +1,4 @@
-import ButtonPrimary from "@/components/ui/button-primary"
+import ButtonPrimary from "@/components/ui/buttons/button-primary"
 import { FC } from "react";
 
 interface CategoryProps {

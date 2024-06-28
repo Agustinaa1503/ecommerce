@@ -4,7 +4,7 @@ import Container from "@/components/shared/container";
 import React, { useState } from "react";
 import { Input } from "@nextui-org/react";
 import { Title } from "@/components";
-import ButtonPrimary from "@/components/ui/button-primary";
+import ButtonPrimary from "@/components/ui/buttons/button-primary";
 import Link from "next/link";
 
 export default function AddressPage() {

@@ -1,5 +1,5 @@
 import { ColorsSelector, SizeSelector, QuantitySelector, ProductSlideShow } from "@/components";
-import ButtonPrimary from "@/components/ui/button-primary";
+import ButtonPrimary from "@/components/ui/buttons/button-primary";
 import { titleFont } from "@/config/fonts";
 import { Product } from "@/interfaces";
 // import { initialData } from "@/seed/seed";
@@ -26,10 +26,13 @@ export default function ProductPage({ params }: Props) {
 
       {/* SlideShow */}
       <div className="col-span-1 md:col-span-2">
-        <ProductSlideShow 
-        title={product.title}
-        images={product.images}/>
-      </div>
+  {product.images && (
+    <ProductSlideShow 
+      title={product.title}
+      images={product.images || []}
+    />
+  )}
+</div>
 
       {/* DitailsProducts */}
       <div className="col-span-1 px-5">

@@ -1,8 +1,10 @@
 import { CreateAdmin, UpdateAdmin } from "@/interfaces/register.interface";
 import { toast } from "react-toastify";
-import router from 'next/router';
 
-const API = 'http://localhost:8080/api'
+// require('dotenv').config();
+// const API = process.env.API_URL;
+
+const API = "http://localhost:8080/api";
 
 export const createAdminRequest = async (admin: CreateAdmin) => {
     try {
