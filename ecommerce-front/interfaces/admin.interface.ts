@@ -3,10 +3,10 @@ import {z} from "zod"
 // Register Admin
 
 export const RegisterAdminSchema = z.object({
-    firstName: z
+    name: z
     .string().min(3, { message: "El nombre debe tener al menos 3 caracteres" }).max(20),
-    lastName: z
-    .string().min(3, { message: "El apellido debe tener al menos 3 caracteres" }).max(20),
+    // lastName: z
+    // .string().min(3, { message: "El apellido debe tener al menos 3 caracteres" }).max(20),
     phone: z
     .string().min(8, { message: "El telefono debe tener al menos 8 caracteres" }).max(20),
     email:z

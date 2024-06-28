@@ -3,11 +3,11 @@ import NewAdminAgentPage from "./registerAdmin";
 export default function AdminPage() {
     return (
         <div>
-            <h1>ADMIN PAGE</h1>
+            <h1>/DASHBOARD/ADMIN - RUTA</h1>
 
             <NewAdminAgentPage />
 
-            {/* <ProductForm /> */}
+            <ProductForm />
         </div>
     );
 }

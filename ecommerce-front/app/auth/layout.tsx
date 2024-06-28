@@ -1,5 +1,5 @@
 import Container from "@/components/shared/container";
-import NotFound from "../shop/category/not-found";
+// import NotFound from "../shop/category/not-found";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -9,7 +9,6 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             { children }
             </div>
             </Container>
-            
         </main>
     )    
 }

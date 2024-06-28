@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Container from "./shared/container";
-import ButtonPrimary from "./ui/button-primary";
+import ButtonPrimary from "./ui/buttons/button-primary";
 import Header from "./shared/header";
 import Link from "next/link";
 const Inicio = () => {

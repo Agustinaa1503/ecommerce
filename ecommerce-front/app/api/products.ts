@@ -2,7 +2,7 @@ import { CreateProduct, UpdateProduct }   from '../../interfaces/product.interfa
 import { toast } from 'react-toastify';
 
 
-const API = 'http://localhost:8080/api'
+const API = process.env.API_URL;
 
 export const createProductRequest = async (productFormData: FormData) => {
   try {
