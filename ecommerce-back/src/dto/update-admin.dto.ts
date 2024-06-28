@@ -14,13 +14,13 @@ export class UpdateAdminDto {
     @IsNotEmpty()
     @IsString()
     @IsOptional()
-    firstName: string;
+    name: string;
 
-    @ApiProperty()
-    @IsNotEmpty()
-    @IsString()
-    @IsOptional()
-    lastName: string;
+    // @ApiProperty()
+    // @IsNotEmpty()
+    // @IsString()
+    // @IsOptional()
+    // lastName: string;
 
     @ApiProperty()
     @IsNotEmpty()
@@ -48,7 +48,7 @@ export class UpdateAdminDto {
     @ApiProperty()
     @IsString()
     @IsOptional()
-    profilePicture: string;
+    picture: string;
 
     @ApiProperty()
     @IsArray()

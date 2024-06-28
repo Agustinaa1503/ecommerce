@@ -14,25 +14,28 @@ export class User {
   email: string;
 
   @Prop({ type: String, trim: true, required: true })
-  firstName: string;
+  name: string;
 
-  @Prop({ type: String, trim: true, required: true })
-  lastName: string;
-
-  @Prop({ type: String, trim: true, required: true })
+  @Prop({ type: String, trim: true })
   phone: string;
 
-  @Prop({ type: String, trim: true, required: true })
+  @Prop({ type: String, trim: true })
   password: string;
 
-  @Prop({ type: String, trim: true, required: true })
+  @Prop({ type: String, trim: true })
   confirmPassword: string;
 
   @Prop({ type: String, trim: true, enum: Object.values(STATUS), default: STATUS.ACTIVE })
   status: string;
 
   @Prop({ type: String, trim: true })
-  profilePicture: string;
+  image: string;
+
+  @Prop({ type: String, trim: true })
+  accessToken: string;
+
+  @Prop({ type: String, trim: true })
+  refreshToken: string;
 
 }
 

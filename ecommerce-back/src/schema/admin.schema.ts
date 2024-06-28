@@ -15,10 +15,10 @@ export class Admin {
   email: string;
 
   @Prop({ type: String })
-  firstName: string;
+  name: string;
 
-  @Prop({ type: String })
-  lastName: string;
+  // @Prop({ type: String })
+  // lastName: string;
 
   @Prop({ type: String, enum: Object.values(STATUS), default: STATUS.ACTIVE })
   status: string;

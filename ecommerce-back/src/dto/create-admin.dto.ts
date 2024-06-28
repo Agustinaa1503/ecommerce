@@ -13,12 +13,12 @@ export class CreateAdminDto {
     @ApiProperty()
     @IsNotEmpty()
     @IsString()
-    firstName: string;
+    name: string;
 
-    @ApiProperty()
-    @IsNotEmpty()
-    @IsString()
-    lastName: string;
+    // @ApiProperty()
+    // @IsNotEmpty()
+    // @IsString()
+    // lastName: string;
 
     @ApiProperty()
     @IsNotEmpty()
@@ -43,7 +43,7 @@ export class CreateAdminDto {
     @ApiProperty()
     @IsString()
     @IsOptional()
-    profilePicture: string;
+    picture: string;
 
     @ApiProperty()
     @IsArray()
