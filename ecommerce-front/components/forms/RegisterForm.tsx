@@ -10,17 +10,14 @@ import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { RegisterSchema } from "@/interfaces/register.interface";
-import { createUserRequest } from "@/app/api/auth/user";
+import { createUserRequest } from "@/lib/fecths/api";
 import { APP_ROUTES, AUTH_ROUTES } from "@/routes/routes";
 import Image from "next/image";
 import { signIn, signOut, useSession } from "next-auth/react";
+import {generateConfirmationLink} from "@/lib/utils";
 
 type Register = {
-  name: string;
-  phone: string;
   email: string;
-  image?: string;
-  // provider?: string;
   password: string;
   confirmPassword: string;
 };
@@ -28,20 +25,24 @@ type Register = {
 export default function RegisterForm() {
   const [isInvalidToken, setIsInvalidToken] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
+
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const { data: session } = useSession();
   console.log("Inicio de Sesión", session);
 
-  useEffect(() => {
-    if (searchParams) {
-      const token = searchParams.get("token");
-      if (token) {
-        setIsInvalidToken(true);
-      }
-    }
-  }, [searchParams]);
+  // useEffect(() => {
+  //   if (searchParams) {
+  //     const token = searchParams.get("token");
+  //     if (token) {
+  //       setIsInvalidToken(true);
+  //     }
+  //   }
+  // }, [searchParams]);
 
   const {
     register,
@@ -52,17 +53,61 @@ export default function RegisterForm() {
   });
 
   const onSubmit: SubmitHandler<Register> = async (data) => {
+    // 
+    if (password !== confirmPassword) {
+      setPasswordsMatch(false);
+      return;
+    }
+    // 
     try {
-      const response = await createUserRequest(data);
-      console.log(response);
+      const RegisterData = {
+        email:data.email,
+        password: data.password
+      }
+      const response = await createUserRequest(RegisterData);
+      console.log('\x1b[31m%s\x1b[0m',response);
       setIsLoggedIn(true);
+      //
+      const token = await generateConfirmationLink({email:data.email})
+      // 
+      console.log(token);
+      // 
+      const dataEmail = {
+        email: data.email,
+        token: token,
+      }
+      // 
+      const sendEmail = await fetch("/api/resend", {
+        method: "POST",
+        body: JSON.stringify(dataEmail),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-      router.push(AUTH_ROUTES.LOGIN);
+      if (!sendEmail.ok) {
+        throw new Error("Failed to send email");
+      }
+
+      //router.push(AUTH_ROUTES.LOGIN);
+      router.push("/")
     } catch (error) {
       console.log("Error al crear el usuario", error);
       setIsInvalidToken(true);
     }
   };
+
+  // 
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+    setPasswordsMatch(true);
+  };
+
+  const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setConfirmPassword(e.target.value);
+    setPasswordsMatch(true);
+  };
+  // 
 
   return (
     <Container>
@@ -79,14 +124,14 @@ export default function RegisterForm() {
 
         {session?.user ? (
           <div className="flex flex-col items">
-            <p>Hola {session?.user?.name} !!</p>
-            <Image
+            <p>Hola {session?.user?.data.fristName} !!</p>
+            {/* <Image
               src={session?.user?.image}
               alt="Imagen de perfil"
               width={32}
               height={32}
               className="rounded-full"
-            />
+            /> */}
             <button
               onClick={async () =>
                 await signOut({
@@ -117,35 +162,8 @@ export default function RegisterForm() {
         <Title title="CREAR" titlePrimary="CUENTA" />
 
         <div className="container">
-          {!isLoggedIn && (
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="flex flex-col items-center">
-                <Input
-                  isRequired
-                  type="text"
-                  label="Nombre y Apellido"
-                  defaultValue=""
-                  isInvalid={isInvalidToken}
-                  className="max-w-sm mb-4"
-                  {...register("name")}
-                />
-                {errors.name && (
-                  <span className="text-red-500">{errors.name.message}</span>
-                )}
-
-                <Input
-                  isRequired
-                  type="number"
-                  label="Teléfono"
-                  defaultValue=""
-                  isInvalid={isInvalidToken}
-                  className="max-w-sm mb-4"
-                  {...register("phone")}
-                />
-                {errors.phone && (
-                  <span className="text-red-500">{errors.phone.message}</span>
-                )}
-
                 <Input
                   isRequired
                   type="email"
@@ -189,6 +207,10 @@ export default function RegisterForm() {
                   </span>
                 )}
 
+                {!passwordsMatch && (
+                  <span className="text-red-500">Las contraseñas no coinciden</span>
+                )}
+
                 <div className="flex flex-col mb-2 mt-3">
                   <Link href="/api/auth/login" className="mb-3">
                     ¿Ya tienes una cuenta? Ir a inicio de sesión
@@ -202,7 +224,6 @@ export default function RegisterForm() {
                 </div>
               </div>
             </form>
-          )}
         </div>
       </div>
     </Container>
