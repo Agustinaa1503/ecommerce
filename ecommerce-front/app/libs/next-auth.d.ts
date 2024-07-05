@@ -3,9 +3,14 @@ import "next-auth";
 declare module "next-auth" {
   interface Session {
     user: {
-        name: string;
-        email:string;
-        image: string;
+      token: string;
+      data: {
+        id: string;
+        fristName: string | null;
+        lastName: string | null;
+        image: string | null;
+        role: string;
+      }
     };
     expires: string; //FECHA DE EXPIRACIÓN DE LA SESIÓN. Vencimiento de la sesión.
   }

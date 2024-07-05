@@ -13,8 +13,9 @@ export class UserController {
   
   constructor(private readonly userService: UserService) {}
 
-  @Post('')
+  @Post('register')
   @ApiBody({ type: CreateUserDto })
+  //@HttpCode(HttpStatus.CREATED)
   async create(@Body() createUserDto: CreateUserDto) {
     try {
       const existingUser = await this.userService.findOneByEmail(createUserDto.email);
@@ -23,20 +24,24 @@ export class UserController {
       }
 
       const newUser = await this.userService.create(createUserDto);
-      return newUser;
+      return {
+        message: 'Usuario registrado con éxito. Por favor, confirma tu email.',
+        user: newUser,
+      };
     } catch (error) {
-      if (error.response && error.response.status === 400) {
+      if (error instanceof HttpException) {
         // Error de validación de datos
-        throw new HttpException('Datos de usuario no válidos', HttpStatus.BAD_REQUEST);
+        throw error;
       } else {
         // Otros tipos de errores
-        throw new HttpException('Error al procesar la solicitud, datos duplicados', HttpStatus.INTERNAL_SERVER_ERROR);
+        throw new HttpException('Error al procesar la solicitud', HttpStatus.INTERNAL_SERVER_ERROR);
       }
     }
   }
 
-  @Post('')
+  @Get('Login')
   @ApiBody({ type: CreateUserDto })
+  @HttpCode(HttpStatus.CREATED)
   async login(@Body() createUserDto: CreateUserDto) {
     const {email, password} = createUserDto;
     return await this.userService.loginUser(email, password);

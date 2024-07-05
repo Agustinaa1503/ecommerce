@@ -1,4 +1,4 @@
-import RegisterForm from "./RegisterForm";
+import RegisterForm from "@/components/forms/RegisterForm";
 
 export default function NewAccount() {
 

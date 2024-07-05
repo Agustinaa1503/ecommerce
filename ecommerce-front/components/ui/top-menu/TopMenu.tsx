@@ -14,7 +14,7 @@ export const TopMenu = () => {
     const { data: session } = useSession();
     // console.log("Inicio de Sesión", session);
 
-    if (session === undefined) {
+    if (!session) {
       return null;
     }
 
@@ -61,14 +61,15 @@ export const TopMenu = () => {
 
                 {session?.user ? (
           <div>
-            <p>Hola {session?.user?.name} !!</p>
-            <Image
-              src={session?.user?.image}
+            <p>Hola {session?.user?.data.fristName} !!</p>
+            {/* Comentado para test */}
+            {/* <Image
+              src={session?.user?.data.image}
               alt="Imagen de perfil"
               width={32}
               height={32}
               className="rounded-full"
-            />
+            /> */}
             <button
               onClick={async () =>
                 await signOut({

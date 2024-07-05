@@ -33,40 +33,46 @@ export class UserService {
     return this.userModel.findById(id).exec();
   }
 
-  async create(createUserDto: Partial<CreateUserDto>): Promise<User> {
+  async create(createUserDto: Partial<CreateUserDto>): Promise<{ message: string }> {
     try {
+      // Comento esta linea ya que desde el front hace la comparacion de las password ingresadas
       // Encriptar contraseña y confirmación de contraseña
       const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
-      const hashedConfirmPassword = await bcrypt.hash(
-        createUserDto.confirmPassword,
-        10,
-      );
+      // const hashedConfirmPassword = await bcrypt.hash(
+      //   createUserDto.confirmPassword,
+      //   10,
+      //);
 
       // Crear un nuevo usuario con los datos proporcionados y las contraseñas hasheadas
       const newUser = new this.userModel({
         ...createUserDto,
         password: hashedPassword,
-        confirmPassword: hashedConfirmPassword,
+        isActive: false,
+        //confirmPassword: hashedConfirmPassword,
       });
 
       // Generar tokens de acceso y refresco
-      const { accessToken, refreshToken } =
-        await this.generateAccessToken(newUser);
+      //const { accessToken, refreshToken } =
+        // await this.generateAccessToken(newUser);
 
       // Asignar los tokens al usuario
-      newUser.accessToken = accessToken;
-      newUser.refreshToken = refreshToken;
+      //newUser.accessToken = accessToken;
+      //newUser.refreshToken = refreshToken;
 
       // Guardar el nuevo usuario en la base de datos
-      const user = await newUser.save();
+      //const user = await newUser.save();
+      await newUser.save();
 
       // Devolver el usuario creado con los tokens de acceso y refresco
-      return {
-        ...user.toObject(),
-        status: HttpStatus.CREATED.toString(),
-        accessToken,
-        refreshToken,
+      return { message: 'Porfavor confirma tu Email'
+        //...user.toObject(),
+        //status: HttpStatus.CREATED.toString(),
+        //accessToken,
+        //refreshToken,
       };
+
+      
+    
     } catch (error) {
       this.logger.error('Error al crear usuario en MongoDB', error);
       throw error;
@@ -93,7 +99,7 @@ export class UserService {
         );
       }
       if (user && isPasswordValid) {
-        const payload = { sub: user._id, email: user.email, name: user.name };
+        const payload = { sub: user._id, firstName: user.email, };
         const { accessToken, refreshToken } =
           await this.generateAccessToken(payload);
 
@@ -158,7 +164,7 @@ export class UserService {
         secret: 'JWT_SECRET_REFRESH',
       });
 
-      const payload = { sub: user._id, email: user.email, name: user.name };
+      const payload = { id: user._id, fristName: user.fristName, lastName: user.lastName, email: user.email, role: user.role };
 
       const { accessToken } = await this.generateAccessToken(payload);
 
@@ -173,9 +179,11 @@ export class UserService {
 
   private async generateAccessToken(user): Promise<Tokens> {
     const jwtPayload = {
-      sud: user._id,
-      email: user.email,
-      name: user.name,
+      id: user._id, 
+      fristName: user.fristName, 
+      lastName: user.lastName, 
+      email: user.email, 
+      role: user.role
     };
 
     const [accessToken, refreshToken] = await Promise.all([
